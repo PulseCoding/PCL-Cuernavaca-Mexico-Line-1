@@ -838,7 +838,7 @@ client2.on('connect', function(err) {
               }
               CasePackerresults = {
                 ST: CasePackerstate,
-                CPQI : CntInCasePacker
+                CPQI : CntInCasePacker,
                 CPQO : CntOutCasePacker,
                 SP: CasePackerspeed
               }
