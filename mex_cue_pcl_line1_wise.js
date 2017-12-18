@@ -169,6 +169,7 @@ var Labellerct = null,
 var CasePackerct = null,
     CasePackerresults = null,
     CntOutCasePacker = null,
+    CntInCasePacker = null,
     CasePackeractual = 0,
     CasePackertime = 0,
     CasePackersec = 0,
@@ -776,6 +777,7 @@ client2.on('connect', function(err) {
 
 
       client3.readHoldingRegisters(0, 16).then(function(resp) {
+        CntInCasePacker = joinWord(resp.register[0], resp.register[1]);
         CntOutCasePacker = joinWord(resp.register[2], resp.register[3]);
         CntInCheckWeigher = joinWord(resp.register[2], resp.register[3]);
         CntOutEOL = joinWord(resp.register[4], resp.register[5]);
@@ -836,7 +838,7 @@ client2.on('connect', function(err) {
               }
               CasePackerresults = {
                 ST: CasePackerstate,
-                CPQI : CntOutLabeller
+                CPQI : CntInCasePacker
                 CPQO : CntOutCasePacker,
                 SP: CasePackerspeed
               }
