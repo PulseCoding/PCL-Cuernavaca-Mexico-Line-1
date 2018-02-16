@@ -600,7 +600,7 @@ client2.on('connect', function(err) {
               }
               PlugSupplierresults = {
                 ST: PlugSupplierstate,
-                CPQI : CntInPlugSupplier,
+                CPQI : CntInCapper,//CntInPlugSupplier,
                 SP: PlugSupplierspeed
               }
               if (PlugSupplierflagPrint == 1) {
