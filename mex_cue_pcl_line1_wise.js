@@ -554,7 +554,8 @@ client2.on('connect', function(err) {
                 CntInLabeller = joinWord(resp.register[6], resp.register[7]);
                 CntOutLabeller = joinWord(resp.register[8], resp.register[9]);
         //------------------------------------------PlugSupplier----------------------------------------------
-              PlugSupplierct = CntInPlugSupplier // NOTE: igualar al contador de salida
+        //PlugSupplierct = CntInPlugSupplier // NOTE: igualar al contador de salida
+              PlugSupplierct = CntInCapper // NOTE: igualar al contador de salida
               if (!PlugSupplierONS && PlugSupplierct) {
                 PlugSupplierspeedTemp = PlugSupplierct
                 PlugSuppliersec = Date.now()
