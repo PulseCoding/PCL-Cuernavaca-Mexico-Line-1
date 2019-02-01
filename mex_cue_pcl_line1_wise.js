@@ -423,19 +423,11 @@ client1.on('connect', function(err) {
                   FillersecStop = Date.now()
                 }
                 if( ( Date.now() - ( FillertimeStop * 1000 ) ) >= FillersecStop ){
-                  Fillerspeed = 0
+                  //Fillerspeed = 0
                   Fillerstate = 2
                   FillerspeedTemp = Fillerct
                   FillerflagStopped = true
                   FillerflagRunning = false
-                  if(CntInFiller - CntOutFiller - FillerReject.rejected != 0 && ! FillerRejectFlag){
-                    FillerdeltaRejected = CntInFiller - CntOutFiller - FillerReject.rejected
-                    FillerReject.rejected = CntInFiller - CntOutFiller
-                    fs.writeFileSync('FillerRejected.json','{"rejected": ' + FillerReject.rejected + '}')
-                    FillerRejectFlag = true
-                  }else{
-                    FillerdeltaRejected = null
-                  }
                   FillerflagPrint = 1
                 }
               }
@@ -453,7 +445,7 @@ client1.on('connect', function(err) {
                 ST: Fillerstate,
                 CPQI : CntInFiller,
                 CPQO : CntOutFiller,
-                CPQR : FillerdeltaRejected,
+                //CPQR : FillerdeltaRejected,
                 SP: Fillerspeed
               }
               if (FillerflagPrint == 1) {
@@ -642,19 +634,11 @@ client2.on('connect', function(err) {
                   CappersecStop = Date.now()
                 }
                 if( ( Date.now() - ( CappertimeStop * 1000 ) ) >= CappersecStop ){
-                  Capperspeed = 0
+                  //Capperspeed = 0
                   Capperstate = 2
                   CapperspeedTemp = Capperct
                   CapperflagStopped = true
                   CapperflagRunning = false
-                  if(CntInCapper - CntOutCapper - CapperReject.rejected != 0 && ! CapperRejectFlag){
-                    CapperdeltaRejected = CntInCapper - CntOutCapper - CapperReject.rejected
-                    CapperReject.rejected = CntInCapper - CntOutCapper
-                    fs.writeFileSync('CapperRejected.json','{"rejected": ' + CapperReject.rejected + '}')
-                    CapperRejectFlag = true
-                  }else{
-                    CapperdeltaRejected = null
-                  }
                   CapperflagPrint = 1
                 }
               }
@@ -672,7 +656,7 @@ client2.on('connect', function(err) {
                 ST: Capperstate,
                 CPQI : CntInCapper,
                 CPQO : CntOutCapper,
-                CPQR : CapperdeltaRejected,
+                //CPQR : CapperdeltaRejected,
                 SP: Capperspeed
               }
               if (CapperflagPrint == 1) {
@@ -713,19 +697,11 @@ client2.on('connect', function(err) {
                   LabellersecStop = Date.now()
                 }
                 if( ( Date.now() - ( LabellertimeStop * 1000 ) ) >= LabellersecStop ){
-                  Labellerspeed = 0
+                  //Labellerspeed = 0
                   Labellerstate = 2
                   LabellerspeedTemp = Labellerct
                   LabellerflagStopped = true
                   LabellerflagRunning = false
-                  if(CntInLabeller - CntOutLabeller - LabellerReject.rejected != 0 && ! LabellerRejectFlag){
-                    LabellerdeltaRejected = CntInLabeller - CntOutLabeller - LabellerReject.rejected
-                    LabellerReject.rejected = CntInLabeller - CntOutLabeller
-                    fs.writeFileSync('LabellerRejected.json','{"rejected": ' + LabellerReject.rejected + '}')
-                    LabellerRejectFlag = true
-                  }else{
-                    LabellerdeltaRejected = null
-                  }
                   LabellerflagPrint = 1
                 }
               }
@@ -743,7 +719,7 @@ client2.on('connect', function(err) {
                 ST: Labellerstate,
                 CPQI : CntInLabeller,
                 CPQO : CntOutLabeller,
-                CPQR : LabellerdeltaRejected,
+                //CPQR : LabellerdeltaRejected,
                 SP: Labellerspeed
               }
               if (LabellerflagPrint == 1) {
@@ -881,19 +857,11 @@ client2.on('connect', function(err) {
                   CheckWeighersecStop = Date.now()
                 }
                 if( ( Date.now() - ( CheckWeighertimeStop * 1000 ) ) >= CheckWeighersecStop ){
-                  CheckWeigherspeed = 0
+                  //CheckWeigherspeed = 0
                   CheckWeigherstate = 2
                   CheckWeigherspeedTemp = CheckWeigherct
                   CheckWeigherflagStopped = true
                   CheckWeigherflagRunning = false
-                  if(CntInCheckWeigher - CntOutCheckWeigher - CheckWeigherReject.rejected != 0 && ! CheckWeigherRejectFlag){
-                    CheckWeigherdeltaRejected = CntInCheckWeigher - CntOutCheckWeigher - CheckWeigherReject.rejected
-                    CheckWeigherReject.rejected = CntInCheckWeigher - CntOutCheckWeigher
-                    fs.writeFileSync('CheckWeigherRejected.json','{"rejected": ' + CheckWeigherReject.rejected + '}')
-                    CheckWeigherRejectFlag = true
-                  }else{
-                    CheckWeigherdeltaRejected = null
-                  }
                   CheckWeigherflagPrint = 1
                 }
               }
@@ -911,7 +879,7 @@ client2.on('connect', function(err) {
                 ST: CheckWeigherstate,
                 CPQI : CntInCheckWeigher,
                 CPQO : CntOutCheckWeigher,
-                CPQR : CheckWeigherdeltaRejected,
+                //CPQR : CheckWeigherdeltaRejected,
                 SP: CheckWeigherspeed
               }
               if (CheckWeigherflagPrint == 1) {
@@ -938,7 +906,26 @@ client3.on('error', function(err) {
 client3.on('close', function() {
 	clearInterval(id3);
 });
-
+function getRejects() {
+  var FillerDif = CntInFiller - CntOutFiller
+  fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_Filler_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(FillerDif - FillerReject.rejected) + '\n')
+  FillerReject.rejected = FillerDif
+  fs.writeFileSync('FillerRejected.json', '{"rejected": ' + FillerReject.rejected + '}')
+  var CapperDif = CntInCapper - CntOutCapper
+  fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_Capper_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(CapperDif - CapperReject.rejected) + '\n')
+  CapperReject.rejected = CapperDif
+  fs.writeFileSync('CapperRejected.json', '{"rejected": ' + CapperReject.rejected + '}')
+  var LabellerDif = CntInLabeller - CntOutLabeller
+  fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_Labeller_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(LabellerDif - LabellerReject.rejected) + '\n')
+  LabellerReject.rejected = LabellerDif
+  fs.writeFileSync('LabellerRejected.json', '{"rejected": ' + LabellerReject.rejected + '}')
+  var CheckWeigherDif = CntInCheckWeigher - CntOutCheckWeigher
+  fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_CheckWeigher_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(CheckWeigherDif - CheckWeigherReject.rejected) + '\n')
+  CheckWeigherReject.rejected = CheckWeigherDif
+  fs.writeFileSync('CheckWeigherRejected.json', '{"rejected": ' + CheckWeigherReject.rejected + '}')
+}
+setTimeout(getRejects, 60000);
+var storeReject = setInterval(getRejects, 1740000);
 //------------------------------Cerrar-código------------------------------
 var shutdown = function () {
   client1.close()
@@ -950,3 +937,4 @@ var shutdown = function () {
 process.on('SIGTERM', shutdown)
 process.on('SIGINT', shutdown)
 //------------------------------Cerrar-código------------------------------
+
