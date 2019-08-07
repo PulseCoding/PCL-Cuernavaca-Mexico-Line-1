@@ -906,7 +906,7 @@ client3.on('error', function(err) {
 client3.on('close', function() {
 	clearInterval(id3);
 });
-function getRejects() {
+/*function getRejects() {
   var FillerDif = CntInFiller - CntOutFiller
   fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_Filler_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(FillerDif - FillerReject.rejected) + '\n')
   FillerReject.rejected = FillerDif
@@ -923,9 +923,9 @@ function getRejects() {
   fs.appendFileSync('C:/PULSE/L1_LOGS/CUE_PCL_CheckWeigher_l1.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(CheckWeigherDif - CheckWeigherReject.rejected) + '\n')
   CheckWeigherReject.rejected = CheckWeigherDif
   fs.writeFileSync('CheckWeigherRejected.json', '{"rejected": ' + CheckWeigherReject.rejected + '}')
-}
-setTimeout(getRejects, 60000);
-var storeReject = setInterval(getRejects, 1740000);
+}*/
+//setTimeout(getRejects, 60000);
+//var storeReject = setInterval(getRejects, 1740000);
 //------------------------------Cerrar-código------------------------------
 var shutdown = function () {
   client1.close()
